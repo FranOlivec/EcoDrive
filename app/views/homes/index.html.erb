@@ -9,11 +9,12 @@
           <% end %>
         <% end %>
     
-        <<div class="row">
+        <div class="row">
             <% @cars.each do |car| %>
             <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
                 <div class="card h-100 shadow-sm">
-                <%= image_tag car.imag.url, alt: "Imagen de #{car.model}", class: "card-img-top" if car.imag.present? %>
+                  <%= image_tag 'default.jpg', alt: "Imagen de #{car.model}", class: "card-img-top" if car.imag.present? %>
+
                 <div class="card-body">
                     <h5 class="card-title"><%= car.model %></h5>
                     <p class="card-text">
@@ -28,5 +29,9 @@
             </div>
             <% end %>
         </div>
-  </div>
+
+        <div class="container">
+          <% pagy_nav(@pagy) %>
+        </div>
+</div>
   

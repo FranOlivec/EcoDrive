@@ -10,15 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_27_023814) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_27_065308) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "cars", force: :cascade do |t|
     t.string "model"
     t.string "brand"
-    t.text "features"
-    t.integer "fabrication_year"
+    t.string "features", default: [], array: true
+    t.string "fabrication_year"
     t.integer "autonomy"
     t.integer "price"
     t.string "imag"

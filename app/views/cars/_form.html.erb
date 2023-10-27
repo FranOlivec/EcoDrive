@@ -1,52 +1,62 @@
-<%= form_with(model: car) do |form| %>
-  <% if car.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(car.errors.count, "error") %> prohibited this car from being saved:</h2>
+<%= form_for car, html: { class: 'container mt-5' } do |f| %>
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title mb-4">Ficha de Ingreso de Vehículos</h4>
 
-      <ul>
-        <% car.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+          <div class="mb-3">
+            <%= f.label :model, "Modelo:", class: "form-label" %>
+            <%= f.text_field :model, class: "form-control" %>
+          </div>
+
+          <div class="mb-3">
+            <%= f.label :brand, "Marca:", class: "form-label" %>
+            <%= f.text_field :brand, class: "form-control" %>
+          </div>
+
+          <div class="mb-3">
+            <%= f.label :features, "Características:", class: "form-label" %>
+            <div class="form-check">
+              <% Car::FEATURES_OPTIONS.each do |feature| %>
+                <%= check_box_tag 'car[features][]', feature, car.features.include?(feature), class: "form-check-input" %>
+                <%= label_tag "car_features_#{feature}", feature, class: "form-check-label" %>
+                <br>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <%= f.label :fabrication_year, "Año de fabricación:", class: "form-label" %>
+            <%= f.select :fabrication_year, 
+                 options_for_select((2010..Date.today.year).to_a, car.fabrication_year), 
+                 {}, { class: "form-control" } %>
+          </div>
+
+          <div class="mb-3">
+            <%= f.label :autonomy, "Autonomía:", class: "form-label" %>
+            <%= f.number_field :autonomy, class: "form-control" %>
+          </div>
+
+          <div class="mb-3">
+            <%= f.label :price, "Precio:", class: "form-label" %>
+            <%= f.number_field :price, class: "form-control" %>
+          </div>
+
+          <div class="mb-3">
+            <%= f.label :imag, "Imagen:", class: "form-label" %>
+            <%= f.text_field :imag, class: "form-control" %>
+            <div class="container mt-3">
+            </div><%= image_tag 'default.jpg', alt: "Imagen de #{car.model}", class: "card-img-top" if car.imag.present? %>
+
+          </div>
+          
+
+          <div class="mb-3">
+            <%= f.submit "Guardar", class: "btn btn-primary" %>
+          </div>
+        </div>
+      </div>
     </div>
-  <% end %>
-
-  <div>
-    <%= form.label :modelo, style: "display: block" %>
-    <%= form.text_field :modelo %>
-  </div>
-
-  <div>
-    <%= form.label :marca, style: "display: block" %>
-    <%= form.text_field :marca %>
-  </div>
-
-  <div>
-    <%= form.label :caracteristicas, style: "display: block" %>
-    <%= form.text_area :caracteristicas %>
-  </div>
-
-  <div>
-    <%= form.label :año_fabricacion, style: "display: block" %>
-    <%= form.number_field :año_fabricacion %>
-  </div>
-
-  <div>
-    <%= form.label :rango_conduccion, style: "display: block" %>
-    <%= form.number_field :rango_conduccion %>
-  </div>
-
-  <div>
-    <%= form.label :precio_alquiler, style: "display: block" %>
-    <%= form.text_field :precio_alquiler %>
-  </div>
-
-  <div>
-    <%= form.label :imagen, style: "display: block" %>
-    <%= form.text_field :imagen %>
-  </div>
-
-  <div>
-    <%= form.submit %>
   </div>
 <% end %>

@@ -1,7 +1,7 @@
 class CarsController < ApplicationController
-  before_action :set_car, only: %i[ show edit update destroy ]
+  
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :check_if_admin, only: [:new, :create, :edit, :update, :destroy]
+  before_action :check_admin_role, only: [:new, :create, :edit, :update, :destroy]
 
 
   # GET /cars or /cars.json
@@ -11,6 +11,10 @@ class CarsController < ApplicationController
 
   # GET /cars/1 or /cars/1.json
   def show
+    @car = Car.find_by(id: params[:id])
+    unless @car
+      redirect_to cars_path, alert: "El coche solicitado no se encuentra"
+    end
   end
 
   # GET /cars/new
@@ -68,14 +72,22 @@ class CarsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def car_params
-      params.require(:car).permit(:modelo, :marca, :caracteristicas, :año_fabricacion, :rango_conduccion, :precio_alquiler, :imagen)
+      params.require(:car).permit(:model, :brand, :features[], :fabrication_year, :autornomy, :prece, :imag)
     end
 
     private
 
-    def check_if_admin
-      unless current_user.admin?
-        redirect_to root_path, alert: "No tienes permiso para realizar esta acción."
+    def check_admin_role
+      unless current_user && current_user.role == "admin"
+        redirect_to root_path, alert: "No tienes permiso para modificar este vehículo."
       end
+    end
+
+    def rent
+      
+    end
+    
+    def add_comment
+     
     end
 end

@@ -1,37 +1,61 @@
-<div id="<%= dom_id car %>">
-  <p>
-    <strong>Modelo:</strong>
-    <%= car.model %>
-  </p>
+<%= form_for car, html: { class: 'container mt-5' } do |f| %>
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title mb-4">Detalles del Auto</h4>
 
-  <p>
-    <strong>Marca:</strong>
-    <%= car.brand %>
-  </p>
+          <div class="mb-3">
+            <%= f.label :model, "Modelo:", class: "form-label" %>
+            <%= f.text_field :model, class: "form-control" %>
+          </div>
 
-  <p>
-    <strong>Caracteristicas:</strong>
-    <%= car.features %>
-  </p>
+          <div class="mb-3">
+            <%= f.label :brand, "Marca:", class: "form-label" %>
+            <%= f.text_field :brand, class: "form-control" %>
+          </div>
 
-  <p>
-    <strong>Año fabricacion:</strong>
-    <%= car.fabrication_year %>
-  </p>
+          <% if current_user.role == "admin" %>
+            <div class="mb-3">
+              <%= f.label :features, "Características:", class: "form-label" %>
+              <div class="form-check">
+                <% Car::FEATURES_OPTIONS.each do |feature| %>
+                  <%= check_box_tag 'car[features][]', feature, car.features.include?(feature), class: "form-check-input" %>
+                  <%= label_tag "car_features_#{feature}", feature, class: "form-check-label" %>
+                  <br>
+                <% end %>
+              </div>
+            </div>
 
-  <p>
-    <strong>Autonomía:</strong>
-    <%= car.autonomy %>
-  </p>
+            <div class="mb-3">
+              <%= f.label :fabrication_year, "Año de fabricación:", class: "form-label" %>
+              <%= f.select :fabrication_year, 
+                  options_for_select((2010..Date.today.year).to_a, car.fabrication_year), 
+                  {}, { class: "form-control" } %>
+            </div>
+          <%end%>
 
-  <p>
-    <strong>Precio</strong>
-    <%= car.price %>
-  </p>
+          <div class="mb-3">
+            <%= f.label :autonomy, "Autonomía:", class: "form-label" %>
+            <%= f.number_field :autonomy, class: "form-control" %>
+          </div>
 
-  <p>
-    <strong>Imagen:</strong>
-    <%= car.imag%>
-  </p>
+          <div class="mb-3">
+            <%= f.label :price, "Precio:", class: "form-label" %>
+            <%= f.number_field :price, class: "form-control" %>
+          </div>
 
-</div>
+          <div class="mb-3">
+             <div class="container mt-3">
+              <%= image_tag 'default.jpg', alt: "Imagen de #{car.model}", class: "card-img-top" if car.imag.present? %>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <%= f.submit "Guardar", class: "btn btn-primary" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

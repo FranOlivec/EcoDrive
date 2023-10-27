@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+    include Pagy::Backend
     before_action :configure_permitted_parameters, if: :devise_controller?
 
     protected
@@ -7,4 +8,6 @@ class ApplicationController < ActionController::Base
         devise_parameter_sanitizer.permit(:sign_up, keys: [:role])
         devise_parameter_sanitizer.permit(:account_update, keys: [:role])
     end
+
+    
 end
