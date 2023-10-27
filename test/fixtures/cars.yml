@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  modelo: MyString
+  marca: MyString
+  caracteristicas: MyText
+  año_fabricacion: 1
+  rango_conduccion: 1
+  precio_alquiler: 9.99
+  imagen: MyString
+
+two:
+  modelo: MyString
+  marca: MyString
+  caracteristicas: MyText
+  año_fabricacion: 1
+  rango_conduccion: 1
+  precio_alquiler: 9.99
+  imagen: MyString
