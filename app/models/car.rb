@@ -4,5 +4,9 @@ class Car < ApplicationRecord
 
     validates :brand, presence: true
     validates :model, presence: true
-    validates :price, presence: true 
+    validates :price, presence: true
+    
+    scope :search, ->(term) {
+        where("model LIKE ? OR brand LIKE ?", "%#{term}%", "%#{term}%")
+      }
 end

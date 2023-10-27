@@ -8,4 +8,12 @@ class User < ApplicationRecord
 
          validates :email, presence: true, uniqueness: true
 
+         enum role: { client: 0, admin: 1 }
+
+         after_initialize do
+          if self.new_record?
+            self.role ||= :client
+          end
+        end
+
 end

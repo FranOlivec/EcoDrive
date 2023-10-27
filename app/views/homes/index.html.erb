@@ -1,0 +1,32 @@
+<div class="container mt-5">
+    <h2>Autos disponibles</h2>
+      
+        <% if params[:search].present? %>
+          <% if @cars.empty? %>
+            <p class="alert alert-warning">No se encontraron autos que coincidan con "<%= params[:search] %>".</p>
+          <% else %>
+            <p class="alert alert-info">Se encontraron <%= @cars.count %> autos que coinciden con "<%= params[:search] %>".</p>
+          <% end %>
+        <% end %>
+    
+        <<div class="row">
+            <% @cars.each do |car| %>
+            <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                <%= image_tag car.imag.url, alt: "Imagen de #{car.model}", class: "card-img-top" if car.imag.present? %>
+                <div class="card-body">
+                    <h5 class="card-title"><%= car.model %></h5>
+                    <p class="card-text">
+                    Marca: <%= car.brand %><br>
+                    Año de Fabricación: <%= car.fabrication_year %>
+                    </p>
+                </div>
+                <div class="card-footer bg-transparent">
+                    <%= link_to 'Ver detalles', car_path(car), class: 'btn btn-primary' %>
+                </div>
+                </div>
+            </div>
+            <% end %>
+        </div>
+  </div>
+  

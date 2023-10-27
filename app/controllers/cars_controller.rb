@@ -1,5 +1,8 @@
 class CarsController < ApplicationController
   before_action :set_car, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!, except: [:index, :show]
+  before_action :check_if_admin, only: [:new, :create, :edit, :update, :destroy]
+
 
   # GET /cars or /cars.json
   def index
@@ -66,5 +69,13 @@ class CarsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def car_params
       params.require(:car).permit(:modelo, :marca, :caracteristicas, :año_fabricacion, :rango_conduccion, :precio_alquiler, :imagen)
+    end
+
+    private
+
+    def check_if_admin
+      unless current_user.admin?
+        redirect_to root_path, alert: "No tienes permiso para realizar esta acción."
+      end
     end
 end
