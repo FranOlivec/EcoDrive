@@ -21,4 +21,4 @@ Things you may want to cover:
 
 * Deployment instructions
 
-* ...
+* Para iniciar sesión rol administrador mail: aaa@aaa.cl contraseña: 123456; para iniciar sesión como cliente mail: bbb@bbb.cl contraseña: 123456
